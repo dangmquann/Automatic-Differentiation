@@ -62,9 +62,9 @@ class Tensor:
     def shape(self):
         return self.value.shape
 
-    @property
-    def T(self):
-        return OP(Transpose, self)
+    # @property
+    # def T(self):
+    #     return OP(Transpose, self)
 
 
   
@@ -72,17 +72,17 @@ class Tensor:
 
     # ### --- Matrix Ops --- ###
 
-    def sum(self, **kwargs):
-        return OP(Sum, self, **kwargs)
+    # def sum(self, **kwargs):
+    #     return OP(Sum, self, **kwargs)
 
-    def transpose(self): 
-        return OP(Transpose, self)
+    # def transpose(self): 
+    #     return OP(Transpose, self)
 
-    def reshape(self, *shape, **kwargs):
-        return OP(Reshape, self, *shape, **kwargs)
+    # def reshape(self, *shape, **kwargs):
+    #     return OP(Reshape, self, *shape, **kwargs)
 
-    def dot(self, other):
-        return OP(Dot, self, check(other, Tensor))
+    # def dot(self, other):
+    #     return OP(Dot, self, check(other, Tensor))
 
     
     ### --- Backprop & Computation Graph Functions --- ###
