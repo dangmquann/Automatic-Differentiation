@@ -62,28 +62,6 @@ class Tensor:
     def shape(self):
         return self.value.shape
 
-    # @property
-    # def T(self):
-    #     return OP(Transpose, self)
-
-
-  
-
-
-    # ### --- Matrix Ops --- ###
-
-    # def sum(self, **kwargs):
-    #     return OP(Sum, self, **kwargs)
-
-    # def transpose(self): 
-    #     return OP(Transpose, self)
-
-    # def reshape(self, *shape, **kwargs):
-    #     return OP(Reshape, self, *shape, **kwargs)
-
-    # def dot(self, other):
-    #     return OP(Dot, self, check(other, Tensor))
-
     
     ### --- Backprop & Computation Graph Functions --- ###
 
@@ -124,7 +102,7 @@ class Tensor:
 def OP(op, *args, **kwargs):
     value = op.forward(*args, **kwargs)
 
-    tensors = [arg for arg in args if isinstance(arg, Tensor)]
+    tensors = [arg for arg in args if isinstance(arg, Tensor)]   #arg: tensor 
 
     requires_grad = True if np.any([tensor.requires_grad for tensor in tensors]) else False
 
@@ -137,21 +115,3 @@ def OP(op, *args, **kwargs):
     return output_tensor
 
 
-class Function:
-    def __new__(cls, *args, **kwargs):
-        parameters = list(signature(cls.forward).parameters)
-        parameters[0] = "self"
-
-        method = lambda *parameters: OP(cls, *parameters)
-
-        setattr(Tensor, cls.__name__, method) 
-
-        return super().__new__(cls)
-
-
-def register(cls):
-    cls = type(cls.__name__, (cls, Function), {})
-
-    cls()
-
-    return cls
